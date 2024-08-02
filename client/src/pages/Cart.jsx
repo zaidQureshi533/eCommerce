@@ -1,9 +1,38 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import Navbar from '../components/Navbar';
 import Announcement from '../components/Announcement';
 import Footer from '../components/Footer';
-import {Add, Remove} from '../components/icons';
+import CartProduct from '../components/CartProduct';
+import {useSelector} from 'react-redux';
+import {userRequest} from '../requestMethod';
+import {useNavigate} from 'react-router-dom';
+import StripeCheckout from 'react-stripe-checkout';
+
 const Cart = () => {
+	const navigate = useNavigate();
+	const cart = useSelector((state) => state.cart);
+	const KEY = process.env.REACT_APP_STRIPE;
+	const [stripeToken, setStripeToken] = useState(null);
+
+	const onToken = (token) => {
+		setStripeToken(token);
+	};
+
+	useEffect(() => {
+		const makeRequest = async () => {
+			try {
+				const res = await userRequest.post(`/checkout/payment`, {
+					tokenId: stripeToken.id,
+					amount: cart.total * 100,
+				});
+				navigate('/success', {stripeData: res.data, products: cart});
+			} catch (error) {
+				console.log(error);
+			}
+		};
+		stripeToken && makeRequest();
+	}, [stripeToken, cart.total, navigate]);
+
 	return (
 		<div>
 			<Navbar />
@@ -28,71 +57,9 @@ const Cart = () => {
 				</div>
 				<div className='bottom flex flex-col md:flex-row justify-between gap-3'>
 					<div className='info w-full md:w-3/4 border rounded-lg'>
-						<div className='product flex flex-col md:flex-row justify-between'>
-							<div className='product-detail flex-2 flex'>
-								<img
-									className='w-[200px]'
-									src='https://hips.hearstapps.com/vader-prod.s3.amazonaws.com/1614188818-TD1MTHU_SHOE_ANGLE_GLOBAL_MENS_TREE_DASHERS_THUNDER_b01b1013-cd8d-48e7-bed9-52db26515dc4.png?crop=1xw:1.00xh;center,top&resize=480%3A%2A'
-								/>
-								<div className='details p-5 flex flex-col justify-around'>
-									<span>
-										<b>Product:</b> JESSIE THUNDER SHOES
-									</span>
-									<span>
-										<b>ID:</b> 93813718293
-									</span>
-									<div className='w-5 h-5 rounded-full bg-black'></div>
-									<span>
-										<b>Size:</b> 37.5
-									</span>
-								</div>
-							</div>
-							<div className='price-detail flex-1 flex md:flex-col items-center justify-between md:justify-center px-3 md:p-0'>
-								<div className='product-amount-container flex items-center mb-5'>
-									<Add />
-									<div className='product-amount text-2xl mx-1 my-4 md:m-1'>
-										2
-									</div>
-									<Remove />
-								</div>
-								<div className='product-price text-3xl font-light mb-5 md:mb-0'>
-									$ 30
-								</div>
-							</div>
-						</div>
-						<hr />
-						<div className='product flex flex-col md:flex-row justify-between'>
-							<div className='product-detail flex-2 flex'>
-								<img
-									className='w-[200px]'
-									src='https://i.pinimg.com/originals/2d/af/f8/2daff8e0823e51dd752704a47d5b795c.png'
-								/>
-								<div className='details p-5 flex flex-col justify-around'>
-									<span>
-										<b>Product:</b> HAKURA T-SHIRT
-									</span>
-									<span>
-										<b>ID:</b> 93813718293
-									</span>
-									<div className='w-5 h-5 rounded-full bg-black'></div>
-									<span>
-										<b>Size:</b> M
-									</span>
-								</div>
-							</div>
-							<div className='price-detail flex-1 flex md:flex-col items-center justify-between md:justify-center px-3 md:p-0'>
-								<div className='product-amount-container flex items-center mb-5'>
-									<Add />
-									<div className='product-amount text-2xl mx-1 my-4 md:m-1'>
-										1
-									</div>
-									<Remove />
-								</div>
-								<div className='product-price text-3xl font-light mb-5 md:mb-0'>
-									$ 20
-								</div>
-							</div>
-						</div>
+						{cart.products.map((product) => {
+							return <CartProduct key={product._id} product={product} />;
+						})}
 					</div>
 					<div className='summary w-full md:w-1/4 border rounded-lg p-5 min-h-[50vh]'>
 						<h1 className='summary-title text-2xl font-extralight'>
@@ -100,7 +67,7 @@ const Cart = () => {
 						</h1>
 						<div className='summary-item my-7 flex justify-between'>
 							<span>Subtotal</span>
-							<span>$ 80</span>
+							<span>$ {cart.total}</span>
 						</div>
 						<div className='summary-item my-7 flex justify-between'>
 							<span>Estimated Shipping</span>
@@ -112,11 +79,26 @@ const Cart = () => {
 						</div>
 						<div className='summary-item my-7 flex justify-between text-2xl font-medium'>
 							<span>Total</span>
-							<span>$ 80</span>
+							<span>$ {cart.total}</span>
 						</div>
-						<button className='w-full p-[10px] bg-black text-white font-semibold'>
-							CHECKOUT NOW
-						</button>
+					
+						<StripeCheckout
+							name='ANON'
+							description={`Your total is $${cart.total}`}
+							image='https://t3.ftcdn.net/jpg/02/47/48/00/360_F_247480017_ST4hotATsrcErAja0VzdUsrrVBMIcE4u.jpg' // the pop-in header image (default none)
+							billingAddress
+							shippingAddress
+							allowRememberMe
+							currency='USD'
+							panelLabel='Pay'
+							amount={cart.total}
+							stripeKey={KEY}
+							token={onToken}
+						>
+							<button className='w-full p-[10px] bg-black text-white font-semibold'>
+								CHECKOUT NOW
+							</button>
+						</StripeCheckout>
 					</div>
 				</div>
 			</div>

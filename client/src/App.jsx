@@ -7,10 +7,10 @@ import Product from './pages/Product';
 import ProductList from './pages/ProductList';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import {useSelector} from 'react-redux';
+import Success from './pages/Success';
 
 const App = () => {
-	const user = useSelector((state) => state.user.value);
-	const {isLogin} = user;
+	const user = useSelector((state) => state.user.currentUser);
 	return (
 		<>
 			<BrowserRouter>
@@ -18,27 +18,19 @@ const App = () => {
 					<Route
 						exact
 						path='/'
-						element={isLogin ? <Home /> : <Navigate to='/login' />}
+						element={user ? <Home /> : <Navigate to='/login' />}
 					/>
+					<Route path='/products/:category' element={<ProductList />} />
+					<Route path='/product/:id' element={<Product />} />
+					<Route path='/cart' element={<Cart />} />
+					<Route path='/success' element={<Success />} />
 					<Route
 						path='/login'
-						element={!isLogin ? <Login /> : <Navigate to='/' />}
+						element={!user ? <Login /> : <Navigate to='/' />}
 					/>
 					<Route
 						path='/register'
-						element={!isLogin ? <Register /> : <Navigate to='/' />}
-					/>
-					<Route
-						path='/products/:category'
-						element={<ProductList />}
-					/>
-					<Route
-						path='/product/:id'
-						element={<Product />}
-					/>
-					<Route
-						path='/cart'
-						element={<Cart />}
+						element={!user ? <Register /> : <Navigate to='/' />}
 					/>
 				</Routes>
 			</BrowserRouter>

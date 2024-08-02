@@ -1,20 +1,16 @@
 import React, {useState} from 'react';
 import Product from './Product';
-import axios from 'axios';
 import {useEffect} from 'react';
-
+import {publicRequest} from '../requestMethod';
 const Products = ({category, filters, sort}) => {
-	const SERVERURL = process.env.SERVER_URL;
 	const [products, setProducts] = useState([]);
 	const [filteredProducts, setFilteredProducts] = useState([]);
 
 	useEffect(() => {
 		const getProducts = async () => {
 			try {
-				const res = await axios.get(
-					category
-						? `${SERVERURL}/products?category=${category}`
-						: `${SERVERURL}/products`
+				const res = await publicRequest.get(
+					category ? `/products?category=${category}` : `/products`
 				);
 				setProducts(res.data);
 			} catch (error) {
@@ -37,34 +33,23 @@ const Products = ({category, filters, sort}) => {
 
 	useEffect(() => {
 		if (sort === 'newest') {
-			setFilteredProducts((prev) =>
-				[...prev].sort((a, b) => a.createdAt - b.createdAt)
-			);
+			setFilteredProducts([
+				...products.sort((a, b) => a.createdAt - b.createdAt),
+			]);
 		} else if (sort === 'asc') {
-			setFilteredProducts((prev) =>
-				[...prev].sort((a, b) => a.price - b.price)
-			);
+			setFilteredProducts([...products.sort((a, b) => a.price - b.price)]);
 		} else {
-			setFilteredProducts((prev) =>
-				[...prev].sort((a, b) => b.price - a.price)
-			);
+			setFilteredProducts([...products.sort((a, b) => b.price - a.price)]);
 		}
 	}, [sort]);
+
 	return (
 		<div className='p-5 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-2'>
 			{category
-				? filteredProducts.map((item) => (
-						<Product
-							item={item}
-							key={item._id}
-						/>
-				  ))
-				: products.slice(0, 8).map((item) => (
-						<Product
-							item={item}
-							key={item._id}
-						/>
-				  ))}
+				? filteredProducts.map((item) => <Product item={item} key={item._id} />)
+				: products
+						.slice(0, 8)
+						.map((item) => <Product item={item} key={item._id} />)}
 		</div>
 	);
 };

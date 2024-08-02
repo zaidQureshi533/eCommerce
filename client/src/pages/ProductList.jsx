@@ -12,16 +12,16 @@ const ProductList = () => {
 	const [sort, setSort] = useState('Newest');
 	const handleFilters = (e) => {
 		setFilters({...filters, [e.target.name]: e.target.value});
-		console.log(filters)
 	};
 
 	return (
 		<div>
 			<Navbar />
 			<Announcement />
-			<h1 className='title font-extrabold text-xl md:text-4xl text-center mt-3 capitalize'>
+			<h1 className='title font-extrabold text-xl md:text-4xl my-4 px-4 capitalize'>
 				{category}
 			</h1>
+			<hr/>
 			<div className='filter-container flex justify-between'>
 				<div className='filter m-5 flex flex-col md:flex-row gap-2'>
 					<span className='filter-text text-lg md:text-2xl font-semibold mr-5'>

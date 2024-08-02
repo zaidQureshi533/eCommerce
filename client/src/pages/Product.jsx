@@ -5,17 +5,21 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 import {Add, Remove} from '../components/icons';
 import {useParams} from 'react-router-dom';
-import axios from 'axios';
-
+import {publicRequest} from '../requestMethod';
+import {useDispatch} from 'react-redux';
+import {addProduct} from '../store/states/cartRedux';
 const Product = () => {
-	const [product, setProduct] = useState({});
 	const {id} = useParams();
-	const SERVERURL = process.env.SERVER_URL;
 	const PF = process.env.PUBLIC_FOLDER;
+	const [product, setProduct] = useState({});
+	const [quantity, setQuantity] = useState(1);
+	const [color, setColor] = useState('');
+	const [size, setSize] = useState('');
+	const dispatch = useDispatch();
 	useEffect(() => {
 		const getProduct = async () => {
 			try {
-				const res = await axios.get(`${SERVERURL}/products/${id}`);
+				const res = await publicRequest.get(`/products/find/${id}`);
 				setProduct(res.data);
 			} catch (error) {
 				console.log(error);
@@ -23,6 +27,17 @@ const Product = () => {
 		};
 		getProduct();
 	}, [id]);
+
+	const handleQuantity = (type) => {
+		type === 'dec'
+			? quantity > 1 && setQuantity(quantity - 1)
+			: setQuantity(quantity + 1);
+	};
+
+	const handleCart = async () => {
+		//update cart
+		dispatch(addProduct({...product, quantity, size, color}));
+	};
 	return (
 		<div>
 			<Navbar />
@@ -30,7 +45,7 @@ const Product = () => {
 			<div className='wrapper p-[10px] md:p-12 flex flex-col md:flex-row'>
 				<div className='img-container flex-1'>
 					<img
-						className='w-full h-[40vh] md:h-[90vh] object-cover animate-[bounce_1s_linear_infinite]'
+						className='w-full h-[40vh] md:h-[90vh] object-contain animate-[bounce_2s_linear_infinite]'
 						src={`${PF}/${product.img}`}
 						alt=''
 					/>
@@ -44,15 +59,17 @@ const Product = () => {
 							<span className='filter-title text-xl font-extralight'>
 								Color
 							</span>
-							{product.color &&
-								product.color.map((item) => {
-									return (
-										<div
-											className={`filter-color w-5 h-5 border rounded-full cursor-pointer`}
-											style={{backgroundColor: item}}
-										></div>
-									);
-								})}
+							{product.color?.map((item) => {
+								return (
+									<div
+										className={`filter-color w-5 h-5 ${
+											item === 'white' && 'border-2'
+										} rounded-full cursor-pointer`}
+										style={{backgroundColor: item}}
+										onClick={() => setColor(item)}
+									></div>
+								);
+							})}
 						</div>
 						<div className='filter flex items-center gap-x-3'>
 							<span className='filter-title text-xl font-extralight'>Size</span>
@@ -60,25 +77,42 @@ const Product = () => {
 								name=''
 								id=''
 								className='p-1 border border-gray-400 rounded text-sm'
+								onChange={(e) => {
+									setSize(e.target.value);
+								}}
 							>
-								{product.size &&
-									product.size.map((item) => <option>{item}</option>)}
+								{product.size?.map((s) => (
+									<option key={s} defaultValue={'M'}>
+										{s}
+									</option>
+								))}
 							</select>
 						</div>
 					</div>
 					<div className='add-container w-full md:w-1/2 flex items-center justify-between'>
 						<div className='amount-container flex items-center font-bold'>
-							<button>
+							<button
+								onClick={() => {
+									handleQuantity('dec');
+								}}
+							>
 								<Remove />
 							</button>
 							<span className='amount h-7 w-7 border border-teal-800 flex items-center justify-center mx-2 rounded'>
-								1
+								{quantity}
 							</span>
-							<button>
+							<button
+								onClick={() => {
+									handleQuantity('inc');
+								}}
+							>
 								<Add />
 							</button>
 						</div>
-						<button className='p-3 border-2 border-teal-800 cursor-pointer font-medium hover:bg-teal-800 hover:text-white'>
+						<button
+							onClick={handleCart}
+							className='p-3 border-2 border-teal-800 cursor-pointer font-medium hover:bg-teal-800 hover:text-white'
+						>
 							ADD TO CART
 						</button>
 					</div>

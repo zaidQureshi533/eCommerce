@@ -27,6 +27,7 @@ app.use('/api/products', productRoute);
 app.use('/api/checkout', stripeRoute);
 app.use('/api/users', userRoute);
 app.use('/api/categories', categoryRoute);
+app.use('/api/checkout', stripeRoute);
 
 // Configure Public Folder
 const __filename = fileURLToPath(import.meta.url);
