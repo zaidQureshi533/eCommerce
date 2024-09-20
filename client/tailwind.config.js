@@ -7,6 +7,9 @@ export default {
 				bounce: {
 					'0%, 100%' : {transform: 'translateY(-1%)'}
 				}
+			},
+			aria: {
+				invalid: "invalid"
 			}
 		},
 	},

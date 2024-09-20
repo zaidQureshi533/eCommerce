@@ -1,13 +1,13 @@
 import axios from 'axios';
 
 const BASE_URL = process.env.SERVER_URL;
+const TOKEN = localStorage.getItem('token');
 
-const TOKEN = '';
 export const publicRequest = axios.create({
 	baseURL: BASE_URL,
 });
 
 export const userRequest = axios.create({
 	baseURL: BASE_URL,
-	header: {token: `Bearer ${TOKEN}`},
+	headers: {token: `Bearer ${TOKEN}`},
 });

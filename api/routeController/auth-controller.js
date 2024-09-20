@@ -20,16 +20,18 @@ const registerController = async (req, res) => {
 		if (isUser) {
 			return res
 				.status(400)
-				.json({message: 'User already exist with this email'});
+				.json({success: false, message: 'User already exist with this email'});
 		}
 		const salt = await bcrypt.genSalt(10);
 		const hashedPassword = await bcrypt.hash(req.body.password, salt);
 		let newUser = await User.create({...req.body, password: hashedPassword});
 		const user = await User.findOne({email: req.body.email});
-		const token = jwt.sign({id: user._id}, secretKey);
-		res
-			.status(200)
-			.json({success: true, message: 'Account created successfully', token});
+		const accessToken = jwt.sign({id: user._id}, secretKey);
+		res.status(200).json({
+			success: true,
+			message: 'Account created successfully',
+			accessToken,
+		});
 	} catch (error) {
 		res.status(500).send({message: error.message});
 	}
@@ -60,11 +62,8 @@ const loginController = async (req, res) => {
 				message: 'Try to login with correct credentials',
 			});
 		}
-		const accessToken = jwt.sign(
-			{id: user._id, isAdmin: user.isAdmin},
-			secretKey,
-			{expiresIn: '3d'}
-		);
+
+		const accessToken = jwt.sign({id: user._id}, secretKey, {expiresIn: '3d'});
 		const {password, ...others} = user._doc;
 		res.status(200).json({...others, accessToken});
 	} catch (error) {

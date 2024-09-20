@@ -1,77 +1,75 @@
 import React from 'react';
 import {
-	Facebook,
-	Instagram,
-	Mail,
-	Map,
-	Phone,
-	Pinterest,
-	Twitter,
-} from './icons';
-
+	IoLogoFacebook,
+	IoLogoInstagram,
+	IoLogoPinterest,
+	IoLogoTwitter,
+	IoLocationSharp,
+} from 'react-icons/io5';
+import {MdMail, MdPhone} from 'react-icons/md';
+import {Link} from 'react-router-dom';
 const Footer = () => {
 	return (
-		<div className='flex flex-col lg:flex-row text-gray-800 '>
-			<div className='left flex-1 flex flex-col p-5'>
+		<div className='flex gap-3 flex-col lg:flex-row text-gray-800 border-t p-5'>
+			<div className='left flex-1 flex flex-col'>
 				<h1 className='logo font-extrabold text-xl'>eCommerce</h1>
 				<p className='desc my-5'>
-					There are many variations of passages of Lorem Ipsum available, but
-					the majority have suffered alteration in some form, by injected
-					humour, or randomised words which don’t look even slightly believable.
+					At eCommerce, we’re passionate about helping you express your unique
+					style with a curated selection of high-quality fashion essentials.
+					Explore our extensive collection of stylish and sophisticated clothing
+					and accessories for both men and women.
 				</p>
 				<div className='social-container flex gap-2'>
-					<div className='social-icon h-10 w-10 rounded-full flex justify-center items-center bg-blue-600'>
-						<Facebook
-							color='#fff'
-							size='22px'
-						/>
-					</div>
-					<div className='social-icon h-10 w-10 rounded-full flex justify-center items-center bg-gradient-to-tr from-orange-400 via-pink-500 to-purple-500'>
-						<Instagram
-							color='#fff'
-							size='22px'
-						/>
-					</div>
-					<div className='social-icon h-10 w-10 rounded-full flex justify-center items-center bg-blue-500'>
-						<Twitter
-							color='#fff'
-							size='22px'
-						/>
-					</div>
-					<div className='social-icon h-10 w-10 rounded-full flex justify-center items-center bg-[rgb(255,0,01)]'>
-						<Pinterest
-							color='#fff'
-							size='22px'
-						/>
-					</div>
+					<span className={'cursor-pointer'}>
+						<IoLogoFacebook color='#3232ff' size={40} />
+					</span>
+					<span className={'cursor-pointer'}>
+						<IoLogoInstagram color='#e7204c' size={40} />
+					</span>
+					<span className={'cursor-pointer'}>
+						<IoLogoTwitter color='#33b2ff' size={40} />
+					</span>
+					<span className={'cursor-pointer'}>
+						<IoLogoPinterest color='#ed0909' size={40} />
+					</span>
 				</div>
 			</div>
-			<div className='center hidden md:block flex-1 p-5'>
+			<div className='center hidden md:block flex-1'>
 				<h3 className='title font-bold text-lg mb-7'>Useful Links</h3>
 				<ul className='list flex flex-wrap gap-y-3'>
-					<li className='list-item w-1/2'>Home</li>
-					<li className='list-item w-1/2'>Cart</li>
-					<li className='list-item w-1/2'>Man Fashion</li>
-					<li className='list-item w-1/2'>Woman Fashion</li>
-					<li className='list-item w-1/2'>Accessories</li>
-					<li className='list-item w-1/2'>My Account</li>
-					<li className='list-item w-1/2'>Order Tracking</li>
-					<li className='list-item w-1/2'>Wishlist</li>
-					<li className='list-item w-1/2'>Terms</li>
+					<Link to={'/'} className='list-item w-1/2'>
+						Home
+					</Link>
+					<Link to={'/cart'} className='list-item w-1/2'>
+						Cart
+					</Link>
+					<Link to={'/products/mens'} className='list-item w-1/2'>
+						Man Fashion
+					</Link>
+					<Link to={'/products/womens'} className='list-item w-1/2'>
+						Woman Fashion
+					</Link>
+					<Link className='list-item w-1/2'>Accessories</Link>
+					<Link className='list-item w-1/2'>My Account</Link>
+					<Link className='list-item w-1/2'>Order Tracking</Link>
+					<Link className='list-item w-1/2'>Wishlist</Link>
+					<Link to={'/terms'} className='list-item w-1/2'>
+						Terms
+					</Link>
 				</ul>
 			</div>
-			<div className='right flex-1 p-5 bg-[#fff8f8] md:bg-white'>
+			<div className='right flex-1 bg-[#fff8f8] md:bg-white'>
 				<h3 className='title font-bold text-lg mb-7'>Contact</h3>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<Map size='36px' /> House # SC-79, Sector 31/d, P&T Housing Society,
-					Korangi 01, Karachi
+					<IoLocationSharp size={36} /> House # SC-79, Sector 31/d, P&T Housing
+					Society, Korangi 01, Karachi
 				</div>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<Phone size='24px' />
+					<MdPhone size={24} />
 					+92 300 3480130
 				</div>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<Mail size='24px' />
+					<MdMail size={24} />
 					contact.ecommerce@hotmail.com
 				</div>
 				<img

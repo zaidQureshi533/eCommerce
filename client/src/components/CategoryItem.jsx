@@ -6,7 +6,7 @@ const CategoryItem = ({item}) => {
 	const PF = process.env.PUBLIC_FOLDER;
 	return (
 		<Link to={`/products/${title}`}>
-			<div className='h-[70vh] relative '>
+			<div className='h-[70vh] relative'>
 				<img
 					src={`${PF}/${img}`}
 					className='w-full h-[60vh] md:h-full object-cover'

@@ -1,8 +1,15 @@
 import React from 'react';
 import {useForm} from 'react-hook-form';
-import {login} from '../store/apiCalls';
 import {useDispatch, useSelector} from 'react-redux';
-const Login = () => {
+import {Link} from 'react-router-dom';
+import {publicRequest} from '../requestMethod';
+import {
+	loginStart,
+	loginSuccess,
+	loginFailure,
+} from '../store/states/userRedux';
+
+const Login = ({alert}) => {
 	const {
 		register,
 		handleSubmit,
@@ -11,8 +18,18 @@ const Login = () => {
 
 	const dispatch = useDispatch();
 	const {isFetching, error} = useSelector((state) => state.user);
+
 	const handleLogin = (data) => {
-		login(dispatch, data);
+		dispatch(loginStart());
+		publicRequest
+			.post('/auth/login', data)
+			.then((res) => {
+				dispatch(loginSuccess(res.data));
+			})
+			.catch((error) => {
+				dispatch(loginFailure());
+				alert('danger', error.response.data.message);
+			});
 	};
 	return (
 		<div className='login-container w-svw h-svh flex items-center justify-center bg-cover bg-center p-4 md:p-0'>
@@ -23,12 +40,6 @@ const Login = () => {
 					action=''
 					className='flex flex-col gap-4'
 				>
-					<input
-						className='flex-1 min-w-[40%] p-[15px] border border-gray-500 rounded-sm text-sm font-light'
-						type='text'
-						placeholder='username'
-						{...register('username', {required: 'username is required'})}
-					/>
 					<input
 						className='flex-1 min-w-[40%] p-[15px] border border-gray-500 rounded-sm text-sm font-light'
 						type='email'
@@ -50,13 +61,13 @@ const Login = () => {
 					>
 						LOGIN
 					</button>
-					{error && <span className='text-red-600'>Something went wrong...</span>}
-					<a className='text-xs underline cursor-pointer'>
-						DO NOT YOU REMEMBER THE PASSWORD?
-					</a>
-					<a className='text-xs underline cursor-pointer'>
-						CREATE A NEW ACCOUNT
-					</a>
+					<Link to="/resetpassword" className='text-xs underline cursor-pointer'>forgot passoword?</Link>
+					<span className='text-xs'>
+						don't have an account?
+						<Link to={'/register'} className='underline cursor-pointer'>
+							Create Account
+						</Link>
+					</span>
 				</form>
 			</div>
 		</div>

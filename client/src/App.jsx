@@ -1,37 +1,59 @@
-import React from 'react';
-import Cart from './pages/Cart';
+import React, {useState} from 'react';
+import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
 import Home from './pages/Home';
 import Login from './pages/Login';
 import Register from './pages/Register';
-import Product from './pages/Product';
 import ProductList from './pages/ProductList';
-import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
-import {useSelector} from 'react-redux';
+import Product from './pages/Product';
+import Cart from './pages/Cart';
 import Success from './pages/Success';
-
+import {useSelector} from 'react-redux';
+import Alert from './components/Alert';
+import Terms from './pages/Terms';
+import { useDispatch } from 'react-redux';
+import { clearCart } from './store/states/cartRedux';
+import ForgotPassword from './pages/ForgotPassword';
+import Orders from './pages/Orders';
 const App = () => {
-	const user = useSelector((state) => state.user.currentUser);
+	const dispatch = useDispatch()
+	const isLogin = useSelector((state) => state?.user.isLogin);
+	const cart = useSelector((state) => state?.cart);
+	const [alert, setAlert] = useState(null);
+
+	const showAlert = (type, message) => {
+		setAlert({type, message});
+		setTimeout(() => {
+			setAlert(null);
+		}, 3000);
+	};
+
+	console.log(cart)
+
 	return (
 		<>
+			<Alert alert={alert} />
 			<BrowserRouter>
 				<Routes>
 					<Route
 						exact
 						path='/'
-						element={user ? <Home /> : <Navigate to='/login' />}
+						element={isLogin ? <Home /> : <Navigate to='/register' />}
 					/>
-					<Route path='/products/:category' element={<ProductList />} />
-					<Route path='/product/:id' element={<Product />} />
-					<Route path='/cart' element={<Cart />} />
-					<Route path='/success' element={<Success />} />
 					<Route
 						path='/login'
-						element={!user ? <Login /> : <Navigate to='/' />}
+						element={
+							!isLogin ? <Login alert={showAlert} /> : <Navigate to='/' />
+						}
 					/>
-					<Route
-						path='/register'
-						element={!user ? <Register /> : <Navigate to='/' />}
-					/>
+					<Route path='/register' element={<Register alert={showAlert} />} />
+					<Route path='/products/:category' element={<ProductList />} />
+					<Route path='/product/:id' element={<Product />} />
+					<Route path='/product/:id' element={<Product />} />
+					<Route path='/Success' element={<Success />} />
+					<Route path='/cart' element={<Cart alert={showAlert} />} />
+					<Route path='/terms' element={<Terms />} />
+					<Route path='/resetpassword' element={<ForgotPassword />} />
+					<Route path='/orders' element={<Orders />} />
 				</Routes>
 			</BrowserRouter>
 		</>

@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import Product from './Product';
 import {useEffect} from 'react';
 import {publicRequest} from '../requestMethod';
+
 const Products = ({category, filters, sort}) => {
 	const [products, setProducts] = useState([]);
 	const [filteredProducts, setFilteredProducts] = useState([]);
@@ -14,23 +15,28 @@ const Products = ({category, filters, sort}) => {
 				);
 				setProducts(res.data);
 			} catch (error) {
-				console.log(error);
+				console.log(error.message);
 			}
 		};
 		getProducts();
 	}, [category]);
 
 	useEffect(() => {
-		category &&
-			setFilteredProducts(
-				products.filter((item) =>
-					Object.entries(filters).every(([key, value]) =>
-						item[key].includes(value)
+		const filterProducts = () => {
+			if (filters.color === 'All' && filters.size === 'All') {
+				setFilteredProducts(products);
+			} else {
+				setFilteredProducts(
+					products.filter((product) =>
+						Object.entries(filters).every(([key, value]) =>
+							product[key].includes(value)
+						)
 					)
-				)
-			);
+				);
+			}
+		};
+		category && filterProducts();
 	}, [products, category, filters]);
-
 	useEffect(() => {
 		if (sort === 'newest') {
 			setFilteredProducts([
@@ -44,7 +50,7 @@ const Products = ({category, filters, sort}) => {
 	}, [sort]);
 
 	return (
-		<div className='p-5 grid grid-cols-1 md:grid-cols-3 xl:grid-cols-4 gap-2'>
+		<div className='p-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3'>
 			{category
 				? filteredProducts.map((item) => <Product item={item} key={item._id} />)
 				: products

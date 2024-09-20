@@ -2,7 +2,7 @@ import mongoose from 'mongoose';
 
 const {Schema, model} = mongoose;
 
-const CartSchema = new Schema(
+ const CartSchema = new Schema(
 	{
 		userId: {type: String, required: true},
 		products: [

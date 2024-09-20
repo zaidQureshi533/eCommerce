@@ -8,9 +8,12 @@ import orderRoute from './routes/order.js';
 import productRoute from './routes/product.js';
 import stripeRoute from './routes/stripe.js';
 import userRoute from './routes/user.js';
+import mailRoute from './routes/mail.js';
 import categoryRoute from './routes/category.js';
-import {fileURLToPath} from 'url'; // To convert URL to file path
-import {dirname} from 'path'; // To get directory name
+import {fileURLToPath} from 'url';
+import {dirname} from 'path';
+import multer from 'multer';
+import {verifyTokenAndAdmin} from './routes/verifyToken.js';
 
 const app = express();
 const port = 3000;
@@ -18,6 +21,26 @@ const port = 3000;
 dotenv.config();
 app.use(cors());
 app.use(express.json());
+
+// connect to mongoDB
+
+const mongoUrl = process.env.MONGO_URL;
+mongoose
+	.connect(mongoUrl)
+	.then(() =>
+		app.listen(port, () => {
+			console.log(`Backend is running on port ${port}`);
+		})
+	)
+	.catch((err) => {
+		console.log(err);
+	});
+
+// Configure Public Folder
+const _filename = fileURLToPath(import.meta.url);
+const _dirname = dirname(_filename);
+const PublicPath = `${_dirname}/../uploads`;
+app.use('/images', express.static(PublicPath));
 
 //config routes
 app.use('/api/auth', authRoute);
@@ -28,24 +51,29 @@ app.use('/api/checkout', stripeRoute);
 app.use('/api/users', userRoute);
 app.use('/api/categories', categoryRoute);
 app.use('/api/checkout', stripeRoute);
+app.use('/api/mail', mailRoute);
 
-// Configure Public Folder
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
-const PublicPath = `${__dirname}/../uploads`;
-app.use('/images', express.static(PublicPath));
+//UPLOAD IMAGES
 
-// connect to mongoDB
-const connectToDb = () => {
-	mongoose
-		.connect(process.env.MONGO_URL)
-		.then(() => console.log('DB Connection Successfull!'))
-		.catch((err) => {
-			console.log(err);
-		});
-};
-connectToDb();
-
-app.listen(port, () => {
-	console.log(`Backend is running on port ${port}`);
+const storage = multer.diskStorage({
+	destination: (req, file, cb) => {
+		cb(null, PublicPath);
+	},
+	filename: (req, file, cb) => {
+		cb(null, req.body.name);
+	},
 });
+
+const upload = multer({storage});
+app.post(
+	'/api/upload',
+	verifyTokenAndAdmin,
+	upload.single('file'),
+	(req, res) => {
+		try {
+			return res.status(200).json('File uploaded successfully');
+		} catch (error) {
+			console.error(error);
+		}
+	}
+);

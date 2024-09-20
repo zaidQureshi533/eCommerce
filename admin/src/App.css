@@ -1,0 +1,23 @@
+.container {
+	display: flex;
+	padding: 0 !important;
+}
+
+.outlet {
+	flex: 4;
+	padding-inline: 20px;
+}
+
+.link {
+	text-decoration: none;
+	color: inherit;
+}
+
+button {
+	width: auto !important;
+}
+
+.MuiDataGrid-columnHeaderTitleContainer {
+	display: flex;
+	justify-content: space-between;
+}

@@ -1,6 +1,5 @@
 import React from 'react';
-import {Send} from './icons';
-
+import { IoSendSharp } from "react-icons/io5";
 const Newsletter = () => {
 	return (
 		<div className='h-[70vh] md:h-[50vh] bg-pink-100 flex items-center justify-center flex-col gap-2 md:gap-5 p-3'>
@@ -15,7 +14,7 @@ const Newsletter = () => {
                     className='flex-[5] focus:outline-none ps-5 text-sm'
 				/>
 				<button className='flex-1 bg-teal-700 flex justify-center items-center'>
-					<Send color='white'/>
+					<IoSendSharp size={20} color='white'/>
 				</button>
 			</div>
 		</div>
