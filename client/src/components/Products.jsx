@@ -23,20 +23,29 @@ const Products = ({category, filters, sort}) => {
 
 	useEffect(() => {
 		const filterProducts = () => {
-			if (filters.color === 'All' && filters.size === 'All') {
+			const {color, size} = filters;
+			if (color === 'all' && size === 'all') {
 				setFilteredProducts(products);
+			} else if (color === 'all' && size !== 'all') {
+				setFilteredProducts(
+					products.filter((product) => product.size.includes(size))
+				);
+			} else if (color !== 'all' && size === 'all') {
+				setFilteredProducts(
+					products.filter((product) => product.color.includes(color))
+				);
 			} else {
 				setFilteredProducts(
-					products.filter((product) =>
-						Object.entries(filters).every(([key, value]) =>
-							product[key].includes(value)
-						)
+					products.filter(
+						(product) =>
+							product.color.includes(color) && product.size.includes(size)
 					)
 				);
 			}
 		};
 		category && filterProducts();
-	}, [products, category, filters]);
+	}, [category, products, filters]);
+
 	useEffect(() => {
 		if (sort === 'newest') {
 			setFilteredProducts([

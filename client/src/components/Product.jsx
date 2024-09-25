@@ -2,8 +2,7 @@ import React from 'react';
 import {Link} from 'react-router-dom';
 import {addProduct} from '../store/states/cartRedux';
 import {useDispatch} from 'react-redux';
-import {IoIosCart, IoMdHeartEmpty} from 'react-icons/io';
-import {IoSearchOutline} from 'react-icons/io5';
+import {IoSearchOutline, IoCartOutline, IoHeartOutline} from 'react-icons/io5';
 const Product = ({item}) => {
 	const PF = process.env.PUBLIC_FOLDER;
 	const dispatch = useDispatch();
@@ -32,7 +31,7 @@ const Product = ({item}) => {
 					onClick={handleCart}
 					className='icon w-10 h-10 bg-white rounded-full flex items-center justify-center m-3 cursor-pointer hover:scale-110 transition-all duration-500'
 				>
-					<IoIosCart size={24} />
+					<IoCartOutline size={24} />
 				</button>
 				<Link to={`/product/${item._id}`}>
 					<div className='icon w-10 h-10 bg-white rounded-full flex items-center justify-center m-3 cursor-pointer hover:scale-110 transition-all duration-500'>
@@ -40,7 +39,7 @@ const Product = ({item}) => {
 					</div>
 				</Link>
 				<button className='icon w-10 h-10 bg-white rounded-full flex items-center justify-center m-3 cursor-pointer hover:scale-110 transition-all duration-500'>
-					<IoMdHeartEmpty size={24} />
+					<IoHeartOutline size={24} />
 				</button>
 			</div>
 		</div>

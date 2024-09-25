@@ -27,8 +27,6 @@ const App = () => {
 		}, 3000);
 	};
 
-	console.log(cart)
-
 	return (
 		<>
 			<Alert alert={alert} />

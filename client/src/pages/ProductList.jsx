@@ -1,23 +1,47 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import Products from '../components/Products';
 import {useParams} from 'react-router-dom';
 import Layout from '../components/Layout';
+import {publicRequest} from '../requestMethod';
 const ProductList = () => {
 	const {category} = useParams();
-	const [filters, setFilters] = useState({color: 'All', size: 'All'});
-	const [sort, setSort] = useState('Newest');
+	const [filters, setFilters] = useState({color: 'all', size: 'all'});
+	const [sort, setSort] = useState('newest');
+	const [colors, setColors] = useState([]);
+	const [sizes, setSizes] = useState([]);
 	const handleFilters = (e) => {
 		setFilters({...filters, [e.target.name]: e.target.value});
 	};
 
+	useEffect(() => {
+		const colorsSet = new Set();
+		const sizesSet = new Set();
+		publicRequest
+			.get(`/products?category=${category}`)
+			.then((res) => {
+				res.data.map((product) =>
+					product.color.map((c) => {
+						colorsSet.add(c);
+						setColors([...colorsSet]);
+					})
+				);
+				res.data.map((product) =>
+					product.size.map((s) => {
+						sizesSet.add(s);
+						setSizes([...sizesSet]);
+					})
+				);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, [category]);
+
 	return (
 		<div>
 			<Layout>
-				<h1 className='title font-extrabold text-xl md:text-4xl my-4 px-4 capitalize'>
-					{category}
-				</h1>
 				<hr />
-				<div className='filter-container flex justify-between'>
+				<div className='filter-container flex justify-between mt-6'>
 					<div className='filter m-5 flex flex-col md:flex-row gap-2'>
 						<span className='filter-text text-lg md:text-2xl font-semibold mr-5'>
 							Filter Products:
@@ -27,24 +51,39 @@ const ProductList = () => {
 							name='color'
 							onChange={handleFilters}
 						>
-							<option>All</option>
-							<option>white</option>
-							<option>black</option>
-							<option>red</option>
-							<option>yellow</option>
-							<option>blue</option>
+							<option disabled defaultValue='all'>
+								Filter By Color
+							</option>
+							<option value='all'>All</option>
+							{colors.map((item) => {
+								return (
+									item.length > 0 && (
+										<option key={item} value={item}>
+											{item}
+										</option>
+									)
+								);
+							})}
 						</select>
 						<select
+							defaultValue='all'
 							className='p-2 mr-3 border border-gray-400 rounded text-sm'
 							name='size'
 							onChange={handleFilters}
 						>
-							<option>All</option>
-							<option>XS</option>
-							<option>S</option>
-							<option>M</option>
-							<option>L</option>
-							<option>XL</option>
+							<option disabled defaultValue='all'>
+								Filter By Size
+							</option>
+							<option value='all'>All</option>
+							{sizes.map((item) => {
+								return (
+									item.length > 0 && (
+										<option key={item} value={item}>
+											{item}
+										</option>
+									)
+								);
+							})}
 						</select>
 					</div>
 					<div className='filter m-5 flex flex-col md:flex-row gap-2'>

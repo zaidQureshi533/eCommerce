@@ -30,15 +30,15 @@ router.get('/find/:id', async (req, res) => {
 //GET ALL PRODUCTS
 router.get('/', async (req, res) => {
 	const qNew = req.query.new;
-	const qCategory = req.query.category;
+	const category = req.query.category;
 	try {
 		let products;
 		if (qNew) {
 			products = await Product.find().sort({createdAt: -1}).limit(1);
-		} else if (qCategory) {
+		} else if (category) {
 			products = await Product.find({
 				categories: {
-					$in: [qCategory],
+					$in: [category],
 				},
 			});
 		} else {
@@ -70,4 +70,5 @@ router.patch('/:id', verifyTokenAndAdmin, async (req, res) => {
 		res.status(500).json(err);
 	}
 });
+
 export default router;
