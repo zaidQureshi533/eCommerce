@@ -1,5 +1,5 @@
 import axios from 'axios';
-
+import {useSelector} from 'react-redux';
 const BASE_URL = process.env.SERVER_URL;
 
 const isToken = localStorage.getItem('persist:admin');
@@ -7,7 +7,7 @@ const TOKEN =
 	isToken &&
 	JSON.parse(JSON.parse(isToken)?.user)
 		.currentUser?.accessToken;
-
+		
 //PUBLIC REQUEST
 export const publicRequest = axios.create({
 	baseURL: BASE_URL,
