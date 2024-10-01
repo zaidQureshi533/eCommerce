@@ -3,6 +3,7 @@ import './orders.css';
 import {Box} from '@mui/material';
 import {DataGrid} from '@mui/x-data-grid';
 import {userRequest} from '../../requestMethod';
+import Layout from '../../components/layout/Layout';
 const Orders = () => {
 	const [orders, setOrders] = useState();
 	useEffect(() => {
@@ -23,19 +24,21 @@ const Orders = () => {
 		{field: 'status', headerName: 'Status', width: 200},
 	];
 	return (
-		<div className='container'>
-			<Box width='100%'>
-				<DataGrid
-					columns={columns}
-					rows={orders}
-					getRowId={(row) => row._id}
-					initialState={{pagination: {paginationModel: {pageSize: 5}}}}
-					pageSizeOptions={[5, 10, 20]}
-					checkboxSelection
-					disableRowSelectionOnClick
-				></DataGrid>
-			</Box>
-		</div>
+		<Layout>
+			<div className='container'>
+				<Box width='100%'>
+					<DataGrid
+						columns={columns}
+						rows={orders}
+						getRowId={(row) => row._id}
+						initialState={{pagination: {paginationModel: {pageSize: 5}}}}
+						pageSizeOptions={[5, 10, 20]}
+						checkboxSelection
+						disableRowSelectionOnClick
+					></DataGrid>
+				</Box>
+			</div>
+		</Layout>
 	);
 };
 

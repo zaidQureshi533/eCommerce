@@ -1,104 +1,3 @@
-// import React, {useState} from 'react';
-// import './login.css';
-// import TextField from '@mui/material/TextField';
-// import {
-// 	Button,
-// 	FormControl,
-// 	IconButton,
-// 	InputAdornment,
-// 	InputLabel,
-// 	OutlinedInput,
-// 	Typography,
-// } from '@mui/material';
-// import VisibilityIcon from '@mui/icons-material/Visibility';
-// import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
-// import {useDispatch} from 'react-redux';
-// import {publicRequest} from '../../requestMethod';
-// import {
-// 	loginFailure,
-// 	loginStart,
-// 	loginSuccess,
-// } from '../../store/states/userRedux';
-// import { Link } from 'react-router-dom';
-// const Login = ({alert}) => {
-// 	const dispatch = useDispatch();
-// 	const [userData, setUserData] = useState({email: '', password: ''});
-// 	const [showPassword, setShowPassword] = useState(false);
-
-// 	const handleChange = (e) => {
-// 		const {name, value} = e.target;
-// 		setUserData({...userData, [name]: value});
-// 	};
-
-// 	const handleClick = (e) => {
-// 		e.preventDefault();
-// 		dispatch(loginStart());
-// 		publicRequest
-// 			.post('/auth/login', userData)
-// 			.then((res) => {
-// 				if (res.data.isAdmin) {
-// 					dispatch(loginSuccess(res.data));
-// 				} else {
-// 					alert('error', 'you are not authorized to access admin panel');
-// 				}
-// 			})
-// 			.catch((error) => {
-// 				alert('error', error.response.data.message);
-// 				dispatch(loginFailure());
-// 			});
-// 	};
-
-// 	const handleShowPassword = () => {
-// 		setShowPassword(!showPassword);
-// 	};
-
-// 	return (
-// 		<div className='loginContainer'>
-// 			<form action=''>
-// 				<TextField
-// 					type='email'
-// 					name='email'
-// 					label='Email'
-// 					variant='outlined'
-// 					onChange={handleChange}
-// 				/>
-// 				<FormControl variant='outlined'>
-// 					<InputLabel htmlFor='outlined-adornment-password'>
-// 						Password
-// 					</InputLabel>
-// 					<OutlinedInput
-// 						name='password'
-// 						onChange={handleChange}
-// 						id='outlined-adornment-password'
-// 						type={showPassword ? 'text' : 'password'}
-// 						endAdornment={
-// 							<InputAdornment position='end'>
-// 								<IconButton
-// 									aria-label='toggle password visibility'
-// 									onClick={handleShowPassword}
-// 									edge='end'
-// 									tabIndex={0}
-// 									sx={{marginRight: 1}}
-// 								>
-// 									{showPassword ? <VisibilityOffIcon /> : <VisibilityIcon />}
-// 								</IconButton>
-// 							</InputAdornment>
-// 						}
-// 						label='Password'
-// 					/>
-// 				</FormControl>
-// 				<Button onClick={handleClick} variant='contained' size='large'>
-// 					Log In
-// 				</Button>
-// 				<Typography variant='span' sx={{textAlign: 'center'}}>
-// 					Don't have an account? <Link to={'/register'}>Create Account</Link>
-// 				</Typography>
-// 			</form>
-// 		</div>
-// 	);
-// };
-
-// export default Login;
 import React, {useState} from 'react';
 import './login.css';
 import TextField from '@mui/material/TextField';
@@ -165,7 +64,7 @@ const Login = ({alert}) => {
 			<Box
 				component={'form'}
 				onSubmit={handleSubmit(onSubmit)}
-				sx={{width: {xs: '90%',sm: "50%", md: '40%', lg: '25%'}}}
+				sx={{width: {xs: '90%', sm: '50%', md: '40%', lg: '25%'}}}
 			>
 				<Typography variant='h5' component='h1' gutterBottom>
 					Login
@@ -230,7 +129,7 @@ const Login = ({alert}) => {
 				<Button type='submit' variant='contained' size='large' fullWidth>
 					Log In
 				</Button>
-				<Typography variant='span'>
+				<Typography variant='span' sx={{textAlign: 'center'}}>
 					Don't have an account? <Link to={'/register'}>Create Account</Link>
 				</Typography>
 			</Box>

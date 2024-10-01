@@ -1,13 +1,3 @@
-.container {
-	display: flex;
-	padding: 0 !important;
-}
-
-.outlet {
-	flex: 4;
-	padding-inline: 20px;
-}
-
 .link {
 	text-decoration: none;
 	color: inherit;

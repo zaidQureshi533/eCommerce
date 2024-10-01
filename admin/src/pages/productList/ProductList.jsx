@@ -9,6 +9,7 @@ import {Box, Tooltip} from '@mui/material';
 import MyModal from '../../components/myModal/MyModal';
 import {Button} from '@mui/material';
 import {Add, Edit} from '@mui/icons-material';
+import Layout from '../../components/layout/Layout';
 
 export default function ProductList() {
 	document.title = 'Products';
@@ -94,33 +95,35 @@ export default function ProductList() {
 	];
 
 	return (
-		<div className='productList'>
-			<Link to='/newproduct'>
-				<Button
-					variant='contained'
-					startIcon={<Add />}
-					sx={{width: 'auto', marginBlock: '20px'}}
-				>
-					Add Product
-				</Button>
-			</Link>
-			<Box sx={{minHeight: '90vh', width: '100%'}}>
-				<DataGrid
-					rows={products}
-					columns={columns}
-					getRowId={(row) => row._id}
-					initialState={{
-						pagination: {
-							paginationModel: {
-								pageSize: 10,
+		<Layout>
+			<div className='productList'>
+				<Link to='/newproduct'>
+					<Button
+						variant='contained'
+						startIcon={<Add />}
+						sx={{width: 'auto', marginBlock: '20px'}}
+					>
+						Add Product
+					</Button>
+				</Link>
+				<Box sx={{minHeight: '90vh', width: '100%'}}>
+					<DataGrid
+						rows={products}
+						columns={columns}
+						getRowId={(row) => row._id}
+						initialState={{
+							pagination: {
+								paginationModel: {
+									pageSize: 10,
+								},
 							},
-						},
-					}}
-					pageSizeOptions={[5, 10]}
-					checkboxSelection
-					disableRowSelectionOnClick
-				/>
-			</Box>
-		</div>
+						}}
+						pageSizeOptions={[5, 10]}
+						checkboxSelection
+						disableRowSelectionOnClick
+					/>
+				</Box>
+			</div>
+		</Layout>
 	);
 }

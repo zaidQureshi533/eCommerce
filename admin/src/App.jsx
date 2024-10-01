@@ -1,26 +1,3 @@
-// import './App.css';
-// import Topbar from './components/topbar/Topbar';
-// import Sidebar from './components/sidebar/Sidebar';
-// import {Outlet} from 'react-router-dom';
-
-// function App() {
-// 	return (
-// 		<>
-// 			<Topbar />
-// 			<div className='container'>
-// 				<Sidebar />
-// 				<div className='outlet'>
-// 					<Outlet />
-// 				</div>
-// 			</div>
-// 		</>
-// 	);
-// }
-
-// export default App;
-
-import Sidebar from './components/sidebar/Sidebar';
-import Topbar from './components/topbar/Topbar';
 import './App.css';
 import Home from './pages/home/Home';
 import {BrowserRouter, Routes, Route, Navigate} from 'react-router-dom';
@@ -38,6 +15,7 @@ import Orders from './pages/orders/Orders';
 import Register from './pages/register/Register';
 function App() {
 	const isLogin = useSelector((state) => state.user.isLogin);
+	
 	const [alert, setAlert] = useState(null);
 	const showAlert = (type, message) => {
 		setAlert({type: type, message: message});
@@ -51,10 +29,6 @@ function App() {
 		<>
 			{alert && <Alert severity={alert.type}>{alert.message}</Alert>}
 			<BrowserRouter>
-				{isLogin && <Topbar />}
-				<div className='container'>
-					{isLogin && <Sidebar />}
-					<div className='outlet'>
 						<Routes>
 							<Route
 								exact
@@ -106,8 +80,6 @@ function App() {
 								element={isLogin ? <NewProduct /> : <Navigate to={'/login'} />}
 							/>
 						</Routes>
-					</div>
-				</div>
 			</BrowserRouter>
 		</>
 	);

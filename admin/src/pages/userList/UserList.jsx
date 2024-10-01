@@ -4,6 +4,7 @@ import {DeleteOutline} from '@mui/icons-material';
 import {userRows} from '../../dummyData';
 import {Link} from 'react-router-dom';
 import {useState} from 'react';
+import Layout from '../../components/layout/Layout';
 
 export default function UserList() {
 	document.title = 'Users';
@@ -60,14 +61,16 @@ export default function UserList() {
 	];
 
 	return (
-		<div className='userList'>
-			<DataGrid
-				rows={data}
-				disableSelectionOnClick
-				columns={columns}
-				pageSize={8}
-				checkboxSelection
-			/>
-		</div>
+		<Layout>
+			<div className='userList'>
+				<DataGrid
+					rows={data}
+					disableSelectionOnClick
+					columns={columns}
+					pageSize={8}
+					checkboxSelection
+				/>
+			</div>
+		</Layout>
 	);
 }

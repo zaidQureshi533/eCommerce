@@ -3,6 +3,7 @@ import {addProduct, uploadImage} from '../../store/apiCalls';
 import {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import CloudUploadIcon from '@mui/icons-material/CloudUpload';
+import Layout from '../../components/layout/Layout';
 import {
 	Button,
 	TextField,
@@ -109,139 +110,141 @@ export default function NewProduct() {
 		});
 	};
 	return (
-		<div className='new-product-container'>
-			<div className='newProductForm'>
-				<h1 className='addProductTitle'>New Product</h1>
-				<div className='addProductItem'>
-					<form className='addProductForm' encType='multipart/form-data'>
-						<TextField
-							value={newProduct.title}
-							size='small'
-							type='text'
-							label='Title'
-							name='title'
-							onChange={handleChange}
-						/>
-						<TextField
-							value={newProduct.desc}
-							size='small'
-							type='text'
-							label='Description'
-							name='desc'
-							onChange={handleChange}
-						/>
-						<FormControl size='small'>
-							<InputLabel>Categories</InputLabel>
-							<Select
-								multiple
-								value={selectedCategories}
-								label='Categories'
-								name='Categories'
-								onChange={handleCategoriesChange}
-								renderValue={(selected) => (
-									<Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
-										{selected.map((value) => (
-											<Chip key={value} label={value} />
-										))}
-									</Box>
-								)}
-								inputProps={{'aria-label': 'categories'}}
-							>
-								{categoryItems.map((c) => (
-									<MenuItem key={c} value={c}>
-										<Checkbox checked={selectedCategories.indexOf(c) > -1} />
-										<ListItemText primary={c} />
-									</MenuItem>
-								))}
-							</Select>
-						</FormControl>
-						<TextField
-							value={newProduct.size}
-							size='small'
-							type='text'
-							label='Sizes'
-							name='size'
-							onChange={handleChange}
-						/>
-						<TextField
-							value={newProduct.color}
-							size='small'
-							type='text'
-							label='Colors'
-							name='color'
-							onChange={handleChange}
-						/>
-						<TextField
-							value={newProduct.price}
-							size='small'
-							type='number'
-							label='Price'
-							name='price'
-							onChange={handleChange}
-						/>
-						<FormControl size='small'>
-							<InputLabel>Stock</InputLabel>
-							<Select
-								value={newProduct.inStock}
-								label='Stock'
-								name='inStock'
+		<Layout>
+			<div className='new-product-container'>
+				<div className='newProductForm'>
+					<h1 className='addProductTitle'>New Product</h1>
+					<div className='addProductItem'>
+						<form className='addProductForm' encType='multipart/form-data'>
+							<TextField
+								value={newProduct.title}
+								size='small'
+								type='text'
+								label='Title'
+								name='title'
 								onChange={handleChange}
-							>
-								<MenuItem value='true'>Yes</MenuItem>
-								<MenuItem value='false'>No</MenuItem>
-							</Select>
-						</FormControl>
-						<Button
-							component='label'
-							role={undefined}
-							variant='contained'
-							tabIndex={-1}
-							size='small'
-							color='success'
-							startIcon={<CloudUploadIcon />}
-						>
-							Upload files
-							<input
-								ref={fileInputRef}
-								style={{display: 'none'}}
-								type='file'
-								id='file'
-								name='file'
-								accept='.jpg,.jpeg,.png,.jfif,.webp'
-								onChange={(e) => {
-									setFile(e.target.files[0]);
-								}}
 							/>
-						</Button>
-						{file && <span>{file.name.slice(0, 20)}...</span>}
-						<div className='form-buttons'>
+							<TextField
+								value={newProduct.desc}
+								size='small'
+								type='text'
+								label='Description'
+								name='desc'
+								onChange={handleChange}
+							/>
+							<FormControl size='small'>
+								<InputLabel>Categories</InputLabel>
+								<Select
+									multiple
+									value={selectedCategories}
+									label='Categories'
+									name='Categories'
+									onChange={handleCategoriesChange}
+									renderValue={(selected) => (
+										<Box sx={{display: 'flex', flexWrap: 'wrap', gap: 0.5}}>
+											{selected.map((value) => (
+												<Chip key={value} label={value} />
+											))}
+										</Box>
+									)}
+									inputProps={{'aria-label': 'categories'}}
+								>
+									{categoryItems.map((c) => (
+										<MenuItem key={c} value={c}>
+											<Checkbox checked={selectedCategories.indexOf(c) > -1} />
+											<ListItemText primary={c} />
+										</MenuItem>
+									))}
+								</Select>
+							</FormControl>
+							<TextField
+								value={newProduct.size}
+								size='small'
+								type='text'
+								label='Sizes'
+								name='size'
+								onChange={handleChange}
+							/>
+							<TextField
+								value={newProduct.color}
+								size='small'
+								type='text'
+								label='Colors'
+								name='color'
+								onChange={handleChange}
+							/>
+							<TextField
+								value={newProduct.price}
+								size='small'
+								type='number'
+								label='Price'
+								name='price'
+								onChange={handleChange}
+							/>
+							<FormControl size='small'>
+								<InputLabel>Stock</InputLabel>
+								<Select
+									value={newProduct.inStock}
+									label='Stock'
+									name='inStock'
+									onChange={handleChange}
+								>
+									<MenuItem value='true'>Yes</MenuItem>
+									<MenuItem value='false'>No</MenuItem>
+								</Select>
+							</FormControl>
 							<Button
-								disabled={isFetching || !isFormValid()}
-								className='addProductButton'
-								onClick={handleAddProduct}
+								component='label'
+								role={undefined}
 								variant='contained'
-								size='large'
-								sx={{alignSelf: 'flex-start'}}
+								tabIndex={-1}
+								size='small'
+								color='success'
+								startIcon={<CloudUploadIcon />}
 							>
-								{isFetching ? 'Creating' : 'Create'}
+								Upload files
+								<input
+									ref={fileInputRef}
+									style={{display: 'none'}}
+									type='file'
+									id='file'
+									name='file'
+									accept='.jpg,.jpeg,.png,.jfif,.webp'
+									onChange={(e) => {
+										setFile(e.target.files[0]);
+									}}
+								/>
 							</Button>
-							<Button
-								disabled={isFetching}
-								className='ResetButton'
-								onClick={handleReset}
-								variant='contained'
-								size='large'
-								sx={{alignSelf: 'flex-start'}}
-							>
-								Reset
-							</Button>
-						</div>
-					</form>
+							{file && <span>{file.name.slice(0, 20)}...</span>}
+							<div className='form-buttons'>
+								<Button
+									disabled={isFetching || !isFormValid()}
+									className='addProductButton'
+									onClick={handleAddProduct}
+									variant='contained'
+									size='large'
+									sx={{alignSelf: 'flex-start'}}
+								>
+									{isFetching ? 'Creating' : 'Create'}
+								</Button>
+								<Button
+									disabled={isFetching}
+									className='ResetButton'
+									onClick={handleReset}
+									variant='contained'
+									size='large'
+									sx={{alignSelf: 'flex-start'}}
+								>
+									Reset
+								</Button>
+							</div>
+						</form>
+					</div>
+				</div>
+				<div className='productImg'>
+					{file && <img src={URL.createObjectURL(file)} alt='' />}
 				</div>
 			</div>
-			<div className='productImg'>
-				{file && <img src={URL.createObjectURL(file)} alt='' />}
-			</div>
-		</div>
+		</Layout>
 	);
 }

@@ -32,6 +32,7 @@ const Register = ({alert}) => {
 				username: `${firstName} ${lastName}`,
 				email,
 				password,
+				isAdmin: true,
 			})
 			.then(() => navigate('/login'))
 			.catch((error) => {
