@@ -10,14 +10,11 @@ import Success from './pages/Success';
 import {useSelector} from 'react-redux';
 import Alert from './components/Alert';
 import Terms from './pages/Terms';
-import { useDispatch } from 'react-redux';
-import { clearCart } from './store/states/cartRedux';
 import ForgotPassword from './pages/ForgotPassword';
 import Orders from './pages/Orders';
+import AllCategories from './pages/AllCategories';
 const App = () => {
-	const dispatch = useDispatch()
 	const isLogin = useSelector((state) => state?.user.isLogin);
-	const cart = useSelector((state) => state?.cart);
 	const [alert, setAlert] = useState(null);
 
 	const showAlert = (type, message) => {
@@ -45,6 +42,7 @@ const App = () => {
 					/>
 					<Route path='/register' element={<Register alert={showAlert} />} />
 					<Route path='/products/:category' element={<ProductList />} />
+					<Route path='/categories' element={<AllCategories />} />
 					<Route path='/product/:id' element={<Product />} />
 					<Route path='/product/:id' element={<Product />} />
 					<Route path='/Success' element={<Success />} />

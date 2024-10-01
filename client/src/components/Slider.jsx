@@ -48,7 +48,7 @@ const Slider = () => {
 						{/* Text Container */}
 						<div className='flex-1 h-full flex items-center justify-center px-5'>
 							<div>
-								<h1 className='text-[58px] font-bold'>{slide.title}</h1>
+								<h1 className='text-[58px] font-bold text-teal-700'>{slide.title}</h1>
 								<p className='text[20px] font-medium tracking-[3px] my-[50px]'>
 									{slide.desc}
 								</p>

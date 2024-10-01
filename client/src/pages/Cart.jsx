@@ -36,7 +36,7 @@ const Cart = ({alert}) => {
 						});
 						dispatch(clearCart());
 						alert('success', 'Your order has been placed');
-						console.log(res)
+						console.log(res);
 					}
 				})
 				.catch((error) => {
@@ -64,12 +64,18 @@ const Cart = ({alert}) => {
 								Your Wishlist <strong>(0)</strong>
 							</span>
 						</div>
-						<button className='text-xs md:text-[16px] p-2 md:p-3 cursor-pointer font-semibold bg-black text-white'>
+						<button className='text-xs md:text-[16px] p-2 md:p-3 cursor-pointer font-semibold text-white bg-gray-900 hover:bg-gray-800'>
 							CHECKOUT NOW
 						</button>
 					</div>
 					<div className='bottom flex flex-col md:flex-row justify-between gap-3'>
 						<div className='info w-full md:w-3/4 border rounded-lg'>
+							{cart.products.length === 0 && (
+								<h3 className='h-full flex justify-center items-center text-lg'>
+									Your cart is empty. Browse our products to find something you
+									love!
+								</h3>
+							)}
 							{cart.products.map((product, index) => {
 								return (
 									<CartProduct
@@ -110,7 +116,7 @@ const Cart = ({alert}) => {
 								stripeKey={KEY}
 								token={onToken}
 							>
-								<button className='w-full p-[10px] bg-black text-white font-semibold'>
+								<button className='w-full p-[10px] bg-gray-900 hover:bg-gray-800 text-white font-semibold '>
 									CHECKOUT {cart.quantity < 1 ? '' : `(${cart.quantity})`}
 								</button>
 							</StripeCheckout>

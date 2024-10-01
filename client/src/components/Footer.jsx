@@ -10,10 +10,10 @@ import {MdMail, MdPhone} from 'react-icons/md';
 import {Link} from 'react-router-dom';
 const Footer = () => {
 	return (
-		<div className='flex gap-3 flex-col lg:flex-row text-gray-800 border-t p-5'>
+		<div className='flex gap-3 flex-col lg:flex-row text-gray-800 border-t p-5 text-sm'>
 			<div className='left flex-1 flex flex-col'>
-				<h1 className='logo font-extrabold text-xl'>eCommerce</h1>
-				<p className='desc my-5'>
+				<h1 className='logo font-extrabold text-xl text-teal-700'>eCommerce</h1>
+				<p className='desc my-2'>
 					At eCommerce, we’re passionate about helping you express your unique
 					style with a curated selection of high-quality fashion essentials.
 					Explore our extensive collection of stylish and sophisticated clothing
@@ -35,7 +35,7 @@ const Footer = () => {
 				</div>
 			</div>
 			<div className='center hidden md:block flex-1'>
-				<h3 className='title font-bold text-lg mb-7'>Useful Links</h3>
+				<h3 className='title font-bold text-lg mb-2 text-teal-700'>Useful Links</h3>
 				<ul className='list flex flex-wrap gap-y-3'>
 					<Link to={'/'} className='list-item w-1/2'>
 						Home
@@ -59,17 +59,17 @@ const Footer = () => {
 				</ul>
 			</div>
 			<div className='right flex-1 bg-[#fff8f8] md:bg-white'>
-				<h3 className='title font-bold text-lg mb-7'>Contact</h3>
+				<h3 className='title font-bold text-lg mb-2 text-teal-700'>Contact</h3>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<IoLocationSharp size={36} /> House # SC-79, Sector 31/d, P&T Housing
+					<IoLocationSharp size={20} /> House # SC-79, Sector 31/d, P&T Housing
 					Society, Korangi 01, Karachi
 				</div>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<MdPhone size={24} />
+					<MdPhone size={20} />
 					+92 300 3480130
 				</div>
 				<div className='flex items-center gap-x-3 mb-5'>
-					<MdMail size={24} />
+					<MdMail size={20} />
 					contact.ecommerce@hotmail.com
 				</div>
 				<img

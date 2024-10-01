@@ -30,7 +30,7 @@ const Navbar = () => {
 				</div>
 				<div className='flex justify-between sm:flex-[2]'>
 					<div className='nav-center text-center sm:ml-auto mr-auto'>
-						<Link to={'/'} className='font-bold text-2xl md:text-3xl'>
+						<Link to={'/'} className='font-bold text-2xl md:text-3xl '>
 							ANON
 						</Link>
 					</div>

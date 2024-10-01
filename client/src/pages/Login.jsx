@@ -44,14 +44,14 @@ const Login = ({alert}) => {
 						className='flex-1 min-w-[40%] p-[15px] border border-gray-500 rounded-sm text-sm font-light'
 						type='email'
 						name='email'
-						placeholder='email'
+						placeholder='Email'
 						{...register('email', {required: 'email is required'})}
 					/>
 					<input
 						className='flex-1 min-w-[40%] p-[15px] border border-gray-500 rounded-sm text-sm font-light'
 						type='password'
 						name='password'
-						placeholder='password'
+						placeholder='Password'
 						{...register('password', {required: 'Please Enter Password'})}
 					/>
 					<button
@@ -61,10 +61,10 @@ const Login = ({alert}) => {
 					>
 						LOGIN
 					</button>
-					<Link to="/resetpassword" className='text-xs underline cursor-pointer'>forgot passoword?</Link>
-					<span className='text-xs'>
-						don't have an account?
-						<Link to={'/register'} className='underline cursor-pointer'>
+					<Link to="/resetpassword" className='text-xs underline cursor-pointer text-center hover:text-blue-800'>forgot passoword?</Link>
+					<span className='text-xs text-center '>
+						Don't have an account?
+						<Link to={'/register'} className='underline cursor-pointer hover:text-blue-800 ms-1'>
 							Create Account
 						</Link>
 					</span>
