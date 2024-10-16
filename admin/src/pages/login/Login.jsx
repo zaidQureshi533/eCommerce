@@ -45,6 +45,7 @@ const Login = ({alert}) => {
 			.then((res) => {
 				if (res.data.isAdmin) {
 					dispatch(loginSuccess(res.data));
+					alert('success', 'Login Successfully');
 				} else {
 					alert('error', 'You are not authorized to access admin panel');
 				}
@@ -64,7 +65,7 @@ const Login = ({alert}) => {
 			<Box
 				component={'form'}
 				onSubmit={handleSubmit(onSubmit)}
-				sx={{width: {xs: '90%', sm: '50%', md: '40%', lg: '25%'}}}
+				sx={{width: {xs: '70%', sm: '50%', md: '40%', lg: '25%'}}}
 			>
 				<Typography variant='h5' component='h1' gutterBottom>
 					Login

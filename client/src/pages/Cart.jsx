@@ -71,7 +71,7 @@ const Cart = ({alert}) => {
 					<div className='bottom flex flex-col md:flex-row justify-between gap-3'>
 						<div className='info w-full md:w-3/4 border rounded-lg'>
 							{cart.products.length === 0 && (
-								<h3 className='h-full flex justify-center items-center text-lg'>
+								<h3 className='h-full flex justify-center items-center text-lg select-none'>
 									Your cart is empty. Browse our products to find something you
 									love!
 								</h3>

@@ -20,16 +20,6 @@ const Categories = ({allCategories}) => {
 
 	return (
 		<div className='p-0 md:p-5'>
-			{!allCategories && (
-				<div className='text-right mb-1'>
-					<Link
-						className='font-bold'
-						to={'/categories'}
-					>
-						Show more...
-					</Link>
-				</div>
-			)}
 			<div
 				className={`grid ${
 					allCategories
@@ -45,6 +35,13 @@ const Categories = ({allCategories}) => {
 							return <CategoryItem item={item} key={item._id} />;
 					  })}
 			</div>
+			{!allCategories && (
+				<div className='text-right mb-1'>
+					<Link className='font-bold' to={'/categories'}>
+						Show more...
+					</Link>
+				</div>
+			)}
 		</div>
 	);
 };

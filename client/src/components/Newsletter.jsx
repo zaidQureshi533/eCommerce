@@ -2,7 +2,7 @@ import React from 'react';
 import { IoSendSharp } from "react-icons/io5";
 const Newsletter = () => {
 	return (
-		<div className='h-[70vh] md:h-[50vh] bg-pink-100 flex items-center justify-center flex-col gap-2 md:gap-5 p-3'>
+		<div className='h-[70vh] md:h-[50vh] bg-violet-100 flex items-center justify-center flex-col gap-2 md:gap-5 p-3'>
 			<h1 className='title font-bold text-4xl md:text-7xl md:p-0'>Newsletter</h1>
 			<div className='description text-xl md:text-2xl font-light text-center'>
 				Get Timely updates from your favourite products

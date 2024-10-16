@@ -61,13 +61,21 @@ const Login = ({alert}) => {
 					>
 						LOGIN
 					</button>
-					<Link to="/resetpassword" className='text-xs underline cursor-pointer text-center hover:text-blue-800'>forgot passoword?</Link>
-					<span className='text-xs text-center '>
-						Don't have an account?
-						<Link to={'/register'} className='underline cursor-pointer hover:text-blue-800 ms-1'>
+					<Link
+						to='/resetpassword'
+						className='text-xs underline cursor-pointer text-center hover:text-blue-800'
+					>
+						forgot passoword?
+					</Link>
+					<div className='text-xs text-center '>
+						<span>Don't have an account?</span>
+						<Link
+							to={'/register'}
+							className='underline cursor-pointer hover:text-blue-800 ms-1'
+						>
 							Create Account
 						</Link>
-					</span>
+					</div>
 				</form>
 			</div>
 		</div>

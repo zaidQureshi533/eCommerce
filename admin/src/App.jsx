@@ -9,13 +9,13 @@ import Product from './pages/product/Product';
 import NewProduct from './pages/newProduct/NewProduct';
 import Login from './pages/login/Login';
 import {useSelector} from 'react-redux';
-import {Alert} from '@mui/material';
+import {Alert, Fade, Snackbar} from '@mui/material';
 import {useState} from 'react';
 import Orders from './pages/orders/Orders';
 import Register from './pages/register/Register';
 function App() {
 	const isLogin = useSelector((state) => state.user.isLogin);
-	
+
 	const [alert, setAlert] = useState(null);
 	const showAlert = (type, message) => {
 		setAlert({type: type, message: message});
@@ -27,59 +27,66 @@ function App() {
 
 	return (
 		<>
-			{alert && <Alert severity={alert.type}>{alert.message}</Alert>}
+			{alert && (
+				<Snackbar
+					open={alert}
+					autoHideDuration={3000}
+					anchorOrigin={{vertical: 'top', horizontal: 'center'}}
+					TransitionComponent={Fade}
+				>
+					<Alert severity={alert?.type} variant='filled' sx={{width: '100%'}}>
+						{alert?.message}
+					</Alert>
+				</Snackbar>
+			)}
 			<BrowserRouter>
-						<Routes>
-							<Route
-								exact
-								path='/'
-								element={isLogin ? <Home /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/login'
-								element={
-									!isLogin ? <Login alert={showAlert} /> : <Navigate to='/' />
-								}
-							/>
-							<Route
-								path='/register'
-								element={
-									isLogin ? (
-										<Navigate to={'/'} />
-									) : (
-										<Register alert={showAlert} />
-									)
-								}
-							/>
-							<Route
-								path='/users'
-								element={isLogin ? <UserList /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/user/:userId'
-								element={isLogin ? <User /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/newUser'
-								element={isLogin ? <NewUser /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/orders'
-								element={isLogin ? <Orders /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/products'
-								element={isLogin ? <ProductList /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/product/:productId'
-								element={isLogin ? <Product /> : <Navigate to={'/login'} />}
-							/>
-							<Route
-								path='/newproduct'
-								element={isLogin ? <NewProduct /> : <Navigate to={'/login'} />}
-							/>
-						</Routes>
+				<Routes>
+					<Route
+						exact
+						path='/'
+						element={isLogin ? <Home /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/login'
+						element={
+							!isLogin ? <Login alert={showAlert} /> : <Navigate to='/' />
+						}
+					/>
+					<Route
+						path='/register'
+						element={
+							isLogin ? <Navigate to={'/'} /> : <Register alert={showAlert} />
+						}
+					/>
+					<Route
+						path='/users'
+						element={isLogin ? <UserList /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/user/:userId'
+						element={isLogin ? <User /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/newUser'
+						element={isLogin ? <NewUser /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/orders'
+						element={isLogin ? <Orders /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/products'
+						element={isLogin ? <ProductList /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/product/:productId'
+						element={isLogin ? <Product /> : <Navigate to={'/login'} />}
+					/>
+					<Route
+						path='/newproduct'
+						element={isLogin ? <NewProduct /> : <Navigate to={'/login'} />}
+					/>
+				</Routes>
 			</BrowserRouter>
 		</>
 	);

@@ -58,7 +58,7 @@ const Footer = () => {
 					</Link>
 				</ul>
 			</div>
-			<div className='right flex-1 bg-[#fff8f8] md:bg-white'>
+			<div className='right flex-1 '>
 				<h3 className='title font-bold text-lg mb-2 text-teal-700'>Contact</h3>
 				<div className='flex items-center gap-x-3 mb-5'>
 					<IoLocationSharp size={20} /> House # SC-79, Sector 31/d, P&T Housing

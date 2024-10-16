@@ -61,7 +61,7 @@ const Register = ({alert}) => {
 						{...register('email', {required: 'Email is Required'})}
 					/>
 					<input
-						className={`p-[15px] border border-gray-500 rounded-sm text-sm font-light ${
+						className={`p-[15px] border border-gray-500 rounded-sm font-light ${
 							errors.password && 'placeholder-red-600 outline-red-600'
 						}`}
 						type='password'
@@ -70,7 +70,7 @@ const Register = ({alert}) => {
 						{...register('password', {required: 'Password is Required'})}
 					/>
 					<input
-						className={`p-[15px] border border-gray-500 rounded-sm text-sm font-light ${
+						className={`p-[15px] border border-gray-500 rounded-sm font-light ${
 							errors.confirmPassword && 'placeholder-red-600 outline-red-600'
 						}`}
 						type='password'
@@ -95,9 +95,9 @@ const Register = ({alert}) => {
 					>
 						{isFetching ? 'Creating' : 'Create Account'}
 					</button>
-					<span className='text-xs'>
+					<span className='text-xs text-center'>
 						Already have an account?
-						<Link to={'/login'} className='underline cursor-pointer'>
+						<Link to={'/login'} className='underline cursor-pointer hover:text-blue-800 ms-1'>
 							Sign In
 						</Link>
 					</span>
